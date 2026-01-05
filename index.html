@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hari Priya V | UI/UX Designer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* --- CSS VARIABLES (Black & Yellow Theme) --- */
+        :root {
+            --bg-body: #050505;       
+            --bg-card: #121212;       
+            --accent: #FFD700;        /* Gold/Yellow */
+            --accent-glow: rgba(255, 215, 0, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #b0b0b0;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- 3D METEOR SCROLL TRACK --- */
+        .scroll-track-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%; 
+            background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.1), transparent);
+            z-index: 5;
+        }
+
+        .scroll-meteor {
+            position: absolute;
+            top: 100px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            background: #fff;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            z-index: 6;
+            box-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent);
+            transition: transform 0.1s linear;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            background-color: rgba(5, 5, 5, 0.9);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #222;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 10px;
+            position: relative; 
+            z-index: 10;
+        }
+
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: 800; color: var(--accent); text-transform: uppercase; }
+        .nav-links a { margin-left: 30px; text-decoration: none; color: var(--text-main); transition: var(--transition); font-size: 0.9rem;}
+        .nav-links a:hover { color: var(--accent); }
+
+        /* --- HERO SECTION (UPDATED LAYOUT) --- */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        #dna-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* New Flex Container for Split Layout */
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            display: flex; /* Side by side */
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px; /* Wider for split layout */
+            padding: 0 40px;
+        }
+
+        /* Left Side: Text */
+        .hero-text {
+            flex: 1;
+            text-align: left;
+            padding-right: 50px; /* Space between text and center line */
+        }
+
+        .hero-text h1 { 
+            font-size: 4rem; 
+            margin-bottom: 15px; 
+            line-height: 1.1; 
+            text-shadow: 0 0 20px rgba(0,0,0,0.8); 
+        }
+        
+        .hero-text h2 { 
+            font-size: 1.8rem; 
+            color: var(--accent); 
+            margin-bottom: 25px; 
+            font-weight: 400; 
+            letter-spacing: 2px; 
+        }
+        
+        /* Right Side: Image */
+        .hero-image-container {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end; /* Align image to right */
+            padding-left: 50px; /* Space between image and center line */
+        }
+
+        .profile-circle {
+            width: 400px; /* BIG Image */
+            height: 400px;
+            border-radius: 50%; /* Round */
+            border: 8px solid var(--accent); /* Thick Border */
+            box-shadow: 0 0 50px var(--accent-glow);
+            overflow: hidden;
+            background-color: #222;
+            position: relative;
+            animation: float 6s ease-in-out infinite; /* Floating animation */
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .profile-circle img { width: 100%; height: 100%; object-fit: cover; }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: #000;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 300;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            margin-top: 10px;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--accent-glow); }
+
+        /* --- SECTIONS GENERAL --- */
+        section { padding: 10px 0; border-bottom: 1px solid #111; }
+        .section-title { margin-bottom: 1px; text-align: center; position: relative; z-index: 20; background: var(--bg-body); display: inline-block; padding: 0 20px; border-radius: 20px;}
+        .section-title-container { text-align: center; margin-bottom: 2px; }
+        .section-title h2 { font-size: 2.5rem; color: var(--text-main); display: inline-block; border-bottom: 3px solid var(--accent); padding-bottom: 1px; }
+
+        /* --- ABOUT ME SECTION --- */
+        .about-box {
+            background: linear-gradient(15deg, #101010, #0a0a0a);
+            padding: 1px;
+            border-radius: 15px;
+            border: 1px solid #222;
+            text-align: center;
+            max-width: 1500px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 15;
+        }
+        .about-text { font-size: 1.1 rem; color: var(--text-muted); }
+                    /* --- SKILLS SECTION --- */
+            .skills-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+                gap: 5px;
+                margin-top: 10px;
+                margin-right: 1500px;
+            }
+
+            .skill-card {
+                background: var(--bg-card);
+                border: 1px solid #222;
+                padding: 25px 15px;
+                border-radius: 12px;
+                text-align: center;
+                transition: var(--transition);
+            }
+
+            .skill-card:hover {
+                border-color: var(--accent);
+                box-shadow: 0 0 15px var(--accent-glow);
+                transform: translateY(-5px);
+            }
+
+            .skill-card i {
+                font-size: 2rem;
+                color: var(--accent);
+                margin-bottom: 15px;
+                display: block;
+            }
+
+            .skill-card p {
+                font-weight: 600;
+                font-size: 1rem;
+                color: var(--text-main);
+            }
+                        /* --- UPDATED SKILLS & PROCESS STYLES --- */
+            .tools-icons {
+                display: flex;
+                gap: 5px;
+                margin-bottom: 10px;
+                align-items: center;
+            }
+            .tool-circle {
+                width: 50px;
+                height: 50px;
+                border-radius: 100%;
+                background: #222; /* Placeholder for tool icons */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .skills-pills-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+            .skill-pill {
+                background-color: #FFD700; /* yellow from your image */
+                color:  #080808;
+                padding: 8px 20px;
+                border-radius: 8px;
+                font-size: 0.85rem;
+                font-weight: 500;
+            }
+
+            .process-item {
+                margin-bottom: 40px;
+                border-bottom: 1px solid #222;
+                padding-bottom: 20px;
+            }
+            .process-header {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                margin-bottom: 15px;
+            }
+            .process-header h3 {
+                font-size: 1.2rem;
+                color: #fff;
+            }
+            .process-text {
+                color: #b0b0b0;
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+        /* --- ZIG-ZAG TIMELINE --- */
+        .timeline-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            position: relative;
+            width: 100%;
+        }
+
+        .timeline-item {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 15;
+        }
+
+        .timeline-card {
+            width: 45%; 
+            background-color: var(--bg-card);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #222;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .timeline-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .timeline-item:nth-child(odd) .timeline-card { margin-right: 55%; text-align: right; }
+        .timeline-item:nth-child(even) .timeline-card { margin-left: 55%; text-align: left; }
+
+        .timeline-card::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 12px;
+            height: 12px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-card::after { right: -13%; } 
+        .timeline-item:nth-child(even) .timeline-card::after { left: -13%; }
+
+        .t-date { color: var(--accent); font-size: 0.9rem; font-weight: 700; margin-bottom: 5px; display: block; }
+        .t-role { font-size: 1.3rem; color: #fff; margin-bottom: 5px; }
+        .t-company { color: #888; font-size: 1rem; margin-bottom: 10px; font-style: italic; }
+
+        /* --- PROJECT GRID --- */
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; position: relative; z-index: 15; }
+        .project-card { background-color: var(--bg-card); border-radius: 12px; overflow: hidden; border: 1px solid #222; transition: var(--transition); }
+        .project-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .project-thumb { height: 200px; background-color: #1a1a1a; display: flex; align-items: center; justify-content: center; color: #444; }
+        .project-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .project-info { padding: 20px; }
+        .project-info h3 { margin-bottom: 10px; font-size: 1.3rem; }
+        .project-info p { font-size: 0.9rem; color: #888; margin-bottom: 15px; }
+        .read-case-btn { color: var(--accent); font-size: 0.9rem; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
+
+        /* --- DETAILED CASE STUDIES --- */
+        .case-study-detail {
+            background: #0e0e0e;
+            border: 1px solid #222;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 60px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: center;
+            position: relative;
+            z-index: 15;
+        }
+        .case-image { flex: 1; min-width: 300px; height: 300px; background-color: #1a1a1a; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #555; border: 1px solid #333; }
+        .case-image img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
+        .case-content { flex: 1; min-width: 300px; }
+        .case-content h3 { font-size: 2rem; margin-bottom: 15px; color: var(--accent); }
+        .case-content h4 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .case-content p { color: var(--text-muted); margin-bottom: 20px; }
+        .tech-stack span { display: inline-block; background: #222; color: #fff; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; margin-right: 5px; margin-bottom: 5px; border: 1px solid #333; }
+
+        /* --- CONTACT --- */
+        .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; max-width: 900px; margin: 0 auto; position: relative; z-index: 15; }
+        .contact-info-card { background: linear-gradient(145deg, #111, #0a0a0a); padding: 40px; border-radius: 20px; border: 1px solid #222; }
+        .contact-form { display: flex; flex-direction: column; gap: 15px; }
+        .form-group input, .form-group textarea { width: 100%; background: #111; border: 1px solid #333; padding: 15px; color: #fff; border-radius: 8px; outline: none; transition: 0.3s; }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); }
+
+        /* --- ANIMATIONS --- */
+        .fade-up { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+        .visible { opacity: 1; transform: translateY(0); }
+
+        /* MOBILE RESPONSIVE (Stacking order) */
+        @media (max-width: 900px) {
+            .hero-content { flex-direction: column-reverse; text-align: center; padding-top: 100px; }
+            .hero-text { padding-right: 0; margin-top: 40px; text-align: center; }
+            .hero-text h1 { font-size: 3rem; }
+            .hero-image-container { padding-left: 0; justify-content: center; }
+            .profile-circle { width: 280px; height: 280px; border-width: 5px; } /* Smaller on mobile */
+            
+            .timeline-item { justify-content: flex-start; padding-left: 20px; }
+            .timeline-card { width: 90% !important; margin: 0 !important; text-align: left !important; }
+            .timeline-item:nth-child(odd) .timeline-card::after,
+            .timeline-item:nth-child(even) .timeline-card::after { left: -26px; right: auto; }
+            
+            .contact-container { grid-template-columns: 1fr; }
+            .scroll-track-container { left: 20px; }
+            .scroll-meteor { left: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scroll-track-container"><div class="scroll-meteor" id="meteor"></div></div>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Hari Priya<span style="color:var(--accent)"> V</span></div>
+                <div class="nav-links">
+                    <a href="#about">About</a>
+                    <a href="#skills">Skills</a> 
+                    <a href="#experience">Experience</a>
+                    <a href="#education">Education</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#studies">Case Studies</a> 
+                    <a href="#certifications"> Certificates </a> 
+                    <a href="#contact">Contact</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <canvas id="dna-canvas"></canvas>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Hi, I'm <br> Hari Priya V</h1>
+                <h2>UI/UX Designer</h2>
+                <p style="color: #aaa; font-size: 1.1rem; margin-bottom: 30px;">
+                    Designing Impactful Digital Experiences with <br> Creativity and Precision.
+                </p>
+                <a href="#projects" class="btn" style="font-weight:bold;">View My Work</a> <a href="resume.pdf" class="btn" style="font-weight:bold;" download>Download Resume</a>
+            </div>
+                  
+            <div class="hero-image-container">
+                <div class="profile-circle">
+                    <img src="profile.jpeg" alt="Hari Priya"> 
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container fade-up">
+            <div class="section-title-container"> 
+                <div class="section-title"> <h2>About Me</h2> </div></div>
+            <div class="about-box">
+                <p class="about-text">
+                    I am Hari Priya V, a creative and detail-oriented UI/UX Designer and Graphic Designer with experience in designing intuitive, user-centered digital products. I specialize in creating clean, modern, and responsive website designs that balance aesthetics with usability. My skill set includes user research, wireframing, prototyping, and high-fidelity UI design, along with strong visual design fundamentals.
+                    I have worked on diverse projects across e-commerce, corporate, and healthcare domains, translating business requirements into visually engaging and accessible digital experiences. Proficient in tools such as Figma, Adobe XD, Sketch, and Canva, I collaborate closely with developers and stakeholders to ensure accurate design implementation and seamless user experiences. I am passionate about continuous learning and creating designs that are both functional and impactful..
+                </p>
+            </div>
+        </div>
+    </section>
+<section id="skills">
+            <section class="tools-section">
+        <h2 class="tools-title">Tools I Use</h2>
+
+        <div class="tools-icons">
+            <!-- Figma -->
+            <div class="tool-box">
+            <i class="fab fa-figma"></i>
+            <span>Figma</span>
+            </div>
+
+            <div class="tool-box">
+                <svg width="48" height="48" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="128" height="128" rx="24" fill="#FF61F6"/>
+                    <text x="50%" y="55%" text-anchor="middle" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="50" font-weight="bold">XD</text>
+                </svg>
+                <span>Adobe XD</span>
+                </div>
+
+
+            <div class="tool-box">
+            <!-- Canva Icon SVG -->
+            <!-- C Language Icon SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="40" height="40">
+                <circle cx="128" cy="128" r="128" fill="#A8B9CC"/>
+             <text x="50%" y="55%" font-family="Arial, sans-serif" font-size="120" fill="#054A91" text-anchor="middle" alignment-baseline="middle">C</text>
+            </svg>
+
+            <span>Canva</span>
+            </div>
+
+
+            <!-- Google -->
+            <div class="tool-box">
+            <i class="fab fa-google"></i>
+            <span>Google</span>
+            </div>
+
+            <!-- Sketch -->
+            <div class="tool-box">
+            <i class="fab fa-sketch"></i>
+            <span>Sketch</span>
+            </div>
+
+            <div class="tool-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-openai" viewBox="0 0 16 16">
+                    <path d="M14.949 6.547a3.94 3.94 0 0 0-.348-3.273 4.11 4.11 0 0 0-4.4-1.934A4.1 4.1 0 0 0 8.423.2 4.15 4.15 0 0 0 6.305.086a4.1 4.1 0 0 0-1.891.948 4.04 4.04 0 0 0-1.158 1.753 4.1 4.1 0 0 0-1.563.679A4 4 0 0 0 .554 4.72a3.99 3.99 0 0 0 .502 4.731 3.94 3.94 0 0 0 .346 3.274 4.11 4.11 0 0 0 4.402 1.933c.382.425.852.764 1.377.995.526.231 1.095.35 1.67.346 1.78.002 3.358-1.132 3.901-2.804a4.1 4.1 0 0 0 1.563-.68 4 4 0 0 0 1.14-1.253 3.99 3.99 0 0 0-.506-4.716m-6.097 8.406a3.05 3.05 0 0 1-1.945-.694l.096-.054 3.23-1.838a.53.53 0 0 0 .265-.455v-4.49l1.366.778q.02.011.025.035v3.722c-.003 1.653-1.361 2.992-3.037 2.996m-6.53-2.75a2.95 2.95 0 0 1-.36-2.01l.095.057L5.29 12.09a.53.53 0 0 0 .527 0l3.949-2.246v1.555a.05.05 0 0 1-.022.041L6.473 13.3c-1.454.826-3.311.335-4.15-1.098m-.85-6.94A3.02 3.02 0 0 1 3.07 3.949v3.785a.51.51 0 0 0 .262.451l3.93 2.237-1.366.779a.05.05 0 0 1-.048 0L2.585 9.342a2.98 2.98 0 0 1-1.113-4.094zm11.216 2.571L8.747 5.576l1.362-.776a.05.05 0 0 1 .048 0l3.265 1.86a3 3 0 0 1 1.173 1.207 2.96 2.96 0 0 1-.27 3.2 3.05 3.05 0 0 1-1.36.997V8.279a.52.52 0 0 0-.276-.445m1.36-2.015-.097-.057-3.226-1.855a.53.53 0 0 0-.53 0L6.249 6.153V4.598a.04.04 0 0 1 .019-.04L9.533 2.7a3.07 3.07 0 0 1 3.257.139c.474.325.843.778 1.066 1.303.223.526.289 1.103.191 1.664zM5.503 8.575 4.139 7.8a.05.05 0 0 1-.026-.037V4.049c0-.57.166-1.127.476-1.607s.752-.864 1.275-1.105a3.08 3.08 0 0 1 3.234.41l-.096.054-3.23 1.838a.53.53 0 0 0-.265.455zm.742-1.577 1.758-1 1.762 1v2l-1.755 1-1.762-1z"/>
+                    </svg>
+                <span>ChatGPT</span>
+                </div>
+
+
+            <!-- Framer X (Alternative icon) -->
+            <div class="tool-box">
+            <i class="fas fa-layer-group"></i>
+            <span>Framer X</span>
+            </div>
+        </div>
+        </section>
+
+
+        <h1 style=" font-size: 2.2rem;margin-top: 80px; margin-bottom: 40px; font-weight: 600; text-align: center;">Skills</h1>
+        <div class="skills-pills-container">
+            <div class="skill-pill">#UIUXDesign</div>
+            <div class="skill-pill">#InteractionDesign</div>
+            <div class="skill-pill">#DesignThinking</div>
+            <div class="skill-pill">#VisualStorytelling</div>
+            <div class="skill-pill">#UXResearch</div>
+            <div class="skill-pill">#ColorTheory</div>
+            <div class="skill-pill">#DesignSystems</div>
+            <div class="skill-pill">#VisualStorytelling</div>
+            <div class="skill-pill">#Prototyping</div>
+            <div class="skill-pill">#UXWriting</div>
+            <div class="skill-pill">#UsabilityTesting</div>
+            <div class="skill-pill">#HumanComputerInteraction</div>
+            <div class="skill-pill">#UserTesting</div>
+            <div class="skill-pill">#UserCentricDesign</div>
+            <div class="skill-pill">#UserTesting</div>
+        </div>
+
+        <h1 style="font-size: 2.2rem; margin-top: 80px; margin-bottom: 40px; font-weight: 700; text-align: center;">My Design Process</h1>
+        <div class="main" >
+        <div class="process-item">
+            <div class="process-header">
+                <i class="fas fa-pen-nib"></i>
+                <h3>Define</h3>
+            </div>
+            <p class="process-text">Everything starts with understanding who we're designing for and what we're solving. I deep dive into user goals, business objectives, and pain points. Through stakeholder interviews and user personas, the problem becomes clear. This clarity sets the foundation for everything that follows.</p>
+        </div>
+
+        <div class="process-item">
+            <div class="process-header">
+                <i class="fas fa-magnifying-glass"></i>
+                <h3>Research</h3>
+            </div>
+            <p class="process-text">I dig into data and user behaviour to uncover actionable insights. Competitor analysis and usability audits shape the path forward. Quantitative research tells the what, while qualitative reveals the why. This step ensures every decision is backed by empathy and evidence.</p>
+        </div>
+
+        <div class="process-item">
+            <div class="process-header">
+                <i class="far fa-lightbulb"></i>
+                <h3>Ideate</h3>
+            </div>
+            <p class="process-text">Here, the magic of brainstorming meets design thinking. I explore a spectrum of solutions, from low-fi sketches to wireframes. Prioritizing user journeys, I map interactions that solve real-world needs. Collaboration ensures ideas are tested before being set in stone.</p>
+        </div>
+
+        <div class="process-item">
+            <div class="process-header">
+                <i class="fas fa-wand-magic-sparkles"></i>
+                <h3>Design</h3>
+            </div>
+            <p class="process-text">This is where creativity meets functionality. I craft intuitive, accessible, and visually delightful interfaces. High-fidelity prototypes bring designs to life, considering edge cases too. Through style guides and design systems, consistency takes center stage.</p>
+        </div>
+
+        <div class="process-item" style="border-bottom: none;">
+            <div class="process-header">
+                <i class="fas fa-arrows-rotate"></i>
+                <h3>Test & Iterate</h3>
+            </div>
+            <p class="process-text">User feedback is my compass—testing validates assumptions. Through usability tests and A/B experiments, I uncover improvement areas. Iteration is not an afterthought; it's the engine of refinement. The result? Solutions that delight users and meet business goals.</p>
+        </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* --- NEW CSS FOR THE SKILLS LAYOUT --- */
+    .main{
+        display:flex;
+
+        justify-content: center;
+    }
+    .tool-box {
+        width: 200px;
+        height: 200px;
+        background: #111;
+        border: 1px solid #333;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        transition: 0.3s;
+    }
+    .tool-box:hover { border-color: var(--accent); transform: translateY(-3px); }
+
+    .skills-pills-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 60px;
+    }
+    .skill-pill {
+        background-color: #FFD700; /* Bright Blue from your image */
+        color: #080808;
+        padding: 5px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        box-shadow: 0 4px 10px rgba(33, 150, 243, 0.2);
+    }
+
+    .process-item {
+        margin-bottom: 5px;
+        margin-left : 40px;
+        border-bottom: 1px solid #222;
+        padding-bottom: 5px;
+        max-width: 900px;
+    }
+    .process-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+    .process-header i {
+        font-size: 1.2rem;
+        color: #fff;
+        width: 25px;
+        text-align: center;
+    }
+    .process-header h3 {
+        font-size: 1.4rem;
+        color: #fff;
+        font-weight: 600;
+    }
+    .process-text {
+        color: #b0b0b0;
+        font-size: 1rem;
+        line-height: 1.7;
+        padding-left: 40px; /* Aligns text under the heading, not the icon */
+    }
+    .project-thumb {
+    height: 250px; /* Adjusted for better video visibility */
+    overflow: hidden;
+    position: relative;
+}
+
+.project-thumb video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures video fills the area without stretching */
+    display: block;
+}
+
+.project-card a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+</style>
+ <style>
+.tools-section {
+  text-align: center;
+  margin: 80px 0;
+}
+
+.tools-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+
+.tools-icons {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+.tool-box {
+  width: 100px;
+  height: 100px;
+  background: #111;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.tool-box i {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.tool-box span {
+  font-size: 0.9rem;
+  color: #fff;
+  opacity: 0.85;
+}
+
+/* Hover Effect */
+.tool-box:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Brand Colors */
+.tool-box .fa-figma { color: #F24E1E; }
+.tool-box .fa-adobe { color: #FF0000; }
+.tool-box .fa-canva { color: #00C4CC; }
+.tool-box .fa-google { color: #4285F4; }
+.tool-box .fa-sketch { color: #F7B500; }
+.tool-box .fa-robot { color: #10A37F; }
+.tool-box .fa-layer-group { color: #9B5CFF; }
+
+/* Certificates */
+.certificates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 35px;
+  margin-top: 60px;
+}
+
+/* Card */
+.certificate-card {
+  background: linear-gradient(145deg, #111, #0a0a0a);
+  border: 1px solid #222;
+  border-radius: 18px;
+  overflow: hidden;
+  transition: all 0.35s ease;
+  position: relative;
+}
+
+.certificate-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent);
+  box-shadow: 0 0 25px var(--accent-glow);
+}
+
+/* Image */
+.cert-image {
+  height: 180px;
+  overflow: hidden;
+  background: #000;
+}
+
+.cert-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.certificate-card:hover .cert-image img {
+  transform: scale(1.08);
+}
+
+/* Content */
+.cert-content {
+  padding: 25px;
+}
+
+.cert-content h3 {
+  font-size: 1.15rem;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.cert-org {
+  color: var(--accent);
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.cert-desc {
+  color: #b0b0b0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Year badge */
+.cert-year {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0,0,0,0.7);
+  padding: 5px 10px;
+  font-size: 0.75rem;
+  border-radius: 6px;
+  color: #fff;
+  border: 1px solid #333;
+}
+
+</style>
+    <section id="experience">
+        <div class="container fade-up">
+            <div class="section-title-container"><div class="section-title"><h2>Experience</h2></div></div>
+            
+            <div class="timeline-container">
+                <div class="timeline-item-justify">
+                    <div class="timeline-card">
+                        <span class="t-date">March 2025 - June 2025</span>
+                        <h3 class="t-role">Software Development Intern</h3>
+                        <p class="t-company">Cognizant, Chennai </p>
+                        <p style="color:#888">Successfully completed a professional internship at Cognizant, gaining hands-on experience in software development and web technologies. Acquired practical knowledge of HTML, CSS, and JavaScript designing and developing responsive and user-friendly web interfaces. Learned and worked with .NET framework .NET framework, understanding basic application development, backend logic, and integration concepts. Assisted in developing and modifying web pages, ensuring clean code, proper structure, and adherence to coding standards. Collaborated with team members to understand real-time project workflows, development lifecycle, and best practices. Improved problem-solving skills, debugging techniques, and understanding of industry-level software development processes.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="t-date">July 2025 - December 2025</span>
+                        <h3 class="t-role">UI/UX Design Intern</h3>
+                        <p class="t-company">Dirac Electric Private Limited, Benguluru </p>
+                        <p style="color:#888">Successfully completed a UI/UX Design internship at Dirac Electric Private Limited, gaining practical exposure to user interface and user experience design processes. Worked on creating wireframes, mockups, and high-delity design screens using Figma, Sketch, and Adobe XD Figma, Sketch, and Adobe XD. Designed visually appealing layouts, icons, and graphics, ensuring consistency with brand guidelines. Utilized Canva to create design assets, presentations, and marketing creatives. Collaborated with team members to understand user requirements and translate them into intuitive design solutions. Gained experience in design iteration, feedback implementation, and improving usability based on reviews.</p>
+                    </div>
+                </div>
+                <div class="timeline-item-justify">
+                    <div class="timeline-card">
+                        <span class="t-date">Jan 2025 - present </span>
+                        <h3 class="t-role">UI/UX Design </h3>
+                        <p class="t-company">Tattvo Tech (Startup company )</p>
+                        <p style="color:#888"> I am currently working as a UI/UX Designer at Tattvo Tech, where I design user-friendly and visually appealing digital interfaces for web and mobile applications. My responsibilities include understanding user requirements, creating wireframes, user flows, and high-fidelity UI designs that align with business objectives.
+                            In my role at Tattvo Tech, I actively use tools such as Figma and Adobe XD for designing, prototyping, and maintaining design consistency. I also use ChatGPT as a supporting tool for brainstorming design ideas, improving user flows, writing UX content, and enhancing overall design efficiency. I collaborate closely with developers and stakeholders to ensure smooth design implementation and high-quality user experiences. </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education">
+        <div class="container fade-up">
+            <div class="section-title-container"><div class="section-title"><h2>Education</h2></div></div>
+            
+            <div class="timeline-container">
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="t-date">Aug 2023 - Aug 2025</span>
+                        <h3 class="t-role">M.Tech (Computer Science)</h3>
+                        [CGPA : 9.16 ]<p class="t-company">Koneru Lakshmaiah University, Vijayawada </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="t-date">July 2019 - May 2023</span>
+                        <h3 class="t-role">B.TECH (EEE)</h3>
+                        [CGPA : 8.10 ]<p class="t-company">PACE Institute of Technology & Science, Ongole</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="t-date">June 2017 - May 2019</span>
+                        <h3 class="t-role">Senior Secondary (MPC)</h3>
+                        [CGPA : 8.01 ]<p class="t-company">Narayana Junior College, Ongole </p>
+                    </div> 
+                </div>
+                <div class="timeline-item">
+                      <div class="timeline-card">
+                        <span class="t-date">June 2016 - May 2017</span>
+                        <h3 class="t-role">School</h3>
+                        [CGPA : 8.7 ]<p class="t-company">Sri Saraswathi Sisumandhir , Ongole </p>
+                      </div>
+                </div>      
+            </div>
+        </div>
+    </section>
+
+<section id="projects">
+        <div class="container fade-up">
+            <div class="section-title-container"><div class="section-title"><h2>Selected Projects</h2></div></div>
+            <div class="project-grid">
+                
+                <div class="project-card">
+                    <a href="https://stjosephshospital.it.com/">
+                        <div class="project-thumb">
+                            <video autoplay muted loop playsinline poster="https://via.placeholder.com/400x250/111/555?text=Hospital+Preview">
+                                <source src="YOUR_HOSPITAL_VIDEO_LINK.mov" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="project-info">
+                            <h3>St. Joseph’s Hospital</h3>
+                            <p>Complete UI/UX for the St. Joseph’s Hospital website with an emphasis on clarity and accessibility. Developed professional layouts and patient-friendly navigation.</p>
+                            <span class="read-case-btn">Read Case Study &darr;</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="project-card">
+                    <a href="https://lushlayerss.com/">
+                        <div class="project-thumb">
+                            <video autoplay muted loop playsinline poster="https://via.placeholder.com/400x250/111/555?text=E-com+Preview">
+                                <source src="YOUR_LUSH_LAYERS_VIDEO_LINK.mov" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="project-info">
+                            <h3>Lush Layers E-com</h3>
+                            <p>Designed a modern, clean, and user-friendly shopping experience. Translated brand identity into visually engaging design layouts and smooth user flows.</p>
+                            <span class="read-case-btn">Read Case Study &darr;</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="project-card">
+                    <a href="https://tattvotech.com/">
+                        <div class="project-thumb">
+                            <video autoplay muted loop playsinline poster="https://via.placeholder.com/400x250/111/555?text=Corporate+Preview">
+                                <source src="YOUR_TATTVO_VIDEO_LINK.mov" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="project-info">
+                            <h3>TattvoTech Corporate</h3>
+                            <p>Established a modern B2B digital presence. Focused on information hierarchy, readability, and a brand-consistent professional look.</p>
+                            <span class="read-case-btn">Read Case Study &darr;</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="project-card">
+                    <a href="https://haripriya229.github.io/pet-store-/">
+                        <div class="project-thumb">
+                            <video autoplay muted loop playsinline poster="https://via.placeholder.com/400x250/111/555?text=Pet+Store+Preview">
+                                <source src="YOUR_PETSTORE_VIDEO_LINK.mov" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="project-info">
+                            <h3>Pet Store Website</h3>
+                            <p>Friendly and engaging user experience for a pet store. Created clear product categorization and navigation to enhance user interaction.</p>
+                            <span class="read-case-btn">Read Case Study &darr;</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class=project-card">
+                    <a href="https://forceinfo.netlify.app/">
+                        <div class="project-thumb">
+                            <video autoplay muted loop playsinline poster="https://via.placeholder.com/400x250/111/555?text=Pet+Store+Preview">
+                                <source src="YOUR_FORCEINFO_VIDEO_LINK.mov" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="project-info">
+                            <h3> ForceInfo Website</h3>
+                            <p>ForceInfo is a Salesforce training platform offering courses for administrators, developers, and consultants. It provides hands-on learning, certification guidance, and career support to help learners succeed in the Salesforce ecosystem.</p>
+                            <span class="read-case-btn">Read Case Study &darr;</span>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="studies" style="background-color: #080808;">
+        <div class="container">
+            <div class="section-title-container"><div class="section-title"><h2>Detailed Case Studies</h2></div></div>
+                <div class="case-study-detail fade-up">
+                
+                <div class="case-content">
+                    <h3>St. Joseph’s Hospital</h3>
+                    <p class="case-subtitle">Healthcare Website </p>
+
+                    <div class="case-meta">
+                    <div><strong>Role:</strong> UI/UX Designer</div>
+                    
+                    <div><strong>Tools:</strong> Figma, User Research</div>
+                    </div>
+
+                    <div class="case-section">
+                    <h4>Problem Statement</h4>
+                    <p>
+                        Patients and visitors often need to find relevant hospital services (specialties, diagnostics, contact info) quickly. In a healthcare context — especially when under stress — users should be able to reach what they need without confusion or delay. Healthcare-site UX research indicates that many hospital websites fail due to “overloaded pages with too much text,” “complicated forms / booking processes,” or “unclear navigation.” 
+
+Potential patients require trust and clarity: they need to feel confident about the hospital’s credibility, its doctors, its facilities, and service offerings. Poor design, outdated visuals or ambiguous information can undermine trust. 
+
+Many users may access the site from mobile devices; some may have accessibility needs (visual impairment, older age). Failing to ensure mobile-responsiveness, readability, accessibility may discourage or exclude such users. 
+
+Users want simple, direct paths to key tasks — e.g. booking an appointment, finding contact/locations, viewing relevant services — without having to navigate through complex or cluttered menus.
+                    </p>
+                    </div>
+
+                    <div class="case-section">
+                    <h4>Solution - UX / UI Strategy & Implementation</h4>
+                    <p>
+                        To address the user needs and challenges inherent in a hospital website, the design adopts a clean, intuitive information architecture that organizes content into clearly labeled sections (e.g. “Specialties & Doctors”, “Diagnostics & Lab”, “Book Appointment”, “Contact Us”, “Gallery”). The navigation and layout are structured to minimize cognitive load — enabling visitors (patients or caregivers) to locate services, doctor information, facility details or contact options in a few clicks rather than sifting through dense text. Visual communication is kept consistent and professional: a calming colour palette, readable typography, and ample white-space contribute to a sense of trust and clarity — crucial for a healthcare context. Wherever possible, real-world cues (doctor & service lists; facility photos; clear CTAs) are used to build credibility and reassure users that they are engaging with a legitimate medical institution.
+
+Key user actions (such as booking an appointment or contacting the hospital) are surfaced via prominent, well-placed calls-to-action (CTAs), reducing friction in critical user journeys. The content is written in plain language, avoiding excessive medical jargon, and organized in digestible sections or bullet-style groupings to enable quick scanning — which is vital given that patients often browse under stress or urgency. Moreover, the design is responsive and mobile-friendly, so that users on smartphones and tablets (common among many patients) receive the same usability and clarity as desktop users.
+
+Finally, the interface supports reliability and future-readiness: consistent UI styling across the website, a scalable structure for future expansion (new departments, updated doctor lists, additional patient resources), and design decisions that lay the groundwork for accessibility (e.g. clear contrast, proper content organization) — all to make the site inclusive, user-centric, and maintainable over time.
+                    </p>
+                    </div>
+
+                    <div class="case-section">
+                    <h4>Outcome</h4>
+                    <p>
+                        Improved User Experience & Usability: Visitors can easily find what they need — services, doctor info, contact, booking — without confusion or overload.
+
+Enhanced Trust and Professional Impression: Clean design and organized content help patients feel confident about hospital professionalism and credibility.
+
+Accessibility and Wider Reach: Mobile-friendly, simple UI allows a diverse audience (including older patients or those with limited technical skills) to access and use the site comfortably.
+
+Better Conversion Potential: Clear, visible CTAs and straightforward booking/contact flow likely increase number of appointment inquiries, patient leads, or overall patient engagement.
+
+Scalable & Maintainable Structure: A well-defined information architecture and consistent UI design make future expansions (e.g. more departments, new services, patient portal, multilingual support) easier to integrate without compromising usability.
+                    </p>
+                    </div>
+                </div>
+                </div>
+
+
+            <div class="case-study-detail fade-up">
+                
+                <div class="case-content">
+                    <h3>lushlayerss</h3>
+                    <p class="case-subtitle">pillows Website</p>
+
+                    <div class="case-meta">
+                    <div><strong>Role:</strong> UI/UX Designer</div>
+                    
+                    <div><strong>Tools:</strong> Figma, User Research</div>
+                    </div>
+
+                    <div class="case-section">
+                    <h4>Problem Statement</h4>
+                    <p>
+                        Need for Clear Product Discovery and Browsing Experience — With a range of apparel categories (casual wear, resort wear, best sellers, new arrivals, etc.), users require an intuitive structure to navigate products easily. Without proper organization and clear visuals, product overload or confusion may deter potential buyers.
+
+Need to Instill Trust and Brand Credibility — Since customers cannot physically inspect clothing online, they need reassurance about quality, authenticity, and reliability. Lack of clarity about brand values, product quality, shipping/delivery details, or unclear interface may cause hesitation before purchase.
+
+Need for Smooth, Intuitive Checkout & Purchase Flow — For an e-commerce site, friction in adding items to cart, viewing product details, or checking out can lead to abandoned carts. Especially with fashion retail — users expect seamless browsing → selection → checkout.
+
+Need for Visual Appeal and Usability Across Devices — Fashion retail depends heavily on visual presentation (images, layout, aesthetics). Users browsing via mobile or desktop expect clarity, good readability, appealing visuals, and fast performance. Poor layout, low-quality images, or slow loading can diminish user experience and conversion.
+                    </p>
+                    </div>
+
+                    <div class="case-section">
+                    <h4> Solution - UX / UI Strategy & Implementation </h4>
+                    <p>
+                        To address these needs and challenges, the following design and UX solutions were implemented:
+
+Structured Information Architecture & Clear Navigation
+The website is organized with clear categories (e.g. best sellers, new arrivals, clothing categories), making browsing straightforward. This reduces cognitive load and helps users find relevant products quickly.
+
+High-quality Visual Presentation & Product Imagery
+Products are presented with clean, attractive layouts and high-resolution images to give users a clear view of apparel — essential in fashion e-commerce. This supports visual appeal and helps simulate in-store browsing. 
+
+Prominent Brand Story & Trust Signals
+The “About Us” or brand-story sections communicate brand values, commitment to quality and comfort, making the brand appear more credible. Clear shipping, delivery, and payment information (where applicable) build transparency and reduce purchase anxiety. 
+
+User-oriented Checkout & Conversion Flow
+The design prioritizes simplicity in the user journey: from product discovery to cart and checkout. Important calls-to-action (e.g. “Shop Now”, “Add to Cart”, “Checkout”) are placed intuitively for ease of use. This reduces friction and supports conversion. This aligns with recommended e-commerce UX practices. 
+
+Responsive & Accessible Design
+The layout and UI are designed to function properly on various devices (mobile, tablet, desktop), ensuring consistent usability across platforms — critical given varied user contexts.
+
+Balanced Aesthetics and Functionality
+While the site focuses on clean, minimal, and polished visuals to reflect fashion-brand identity, UX principles guide the functionality: readability, intuitive navigation, clear product information, ensuring that design does not sacrifice usability for style.
+                    </p>
+                    </div>
+
+                    <div class="case-section">
+                    <h4>Outcome</h4>
+                    <p>
+                        Improved User Experience & Engagement: Users browsing the site can quickly find products via organized categories; appealing visuals and clear navigation encourage exploration, increasing user engagement.
+
+Enhanced Trust & Brand Credibility: Clean design, brand story, transparent information (about shipping/delivery/payment) helps build trust — making users more comfortable ordering online.
+
+Higher Conversion Potential: A smooth path from product discovery → selection → checkout (with intuitive CTAs and minimal friction) improves chances of purchase, reducing cart abandonment risk.
+
+Scalable & Maintainable Platform: The structured architecture and consistent UI make it easier to add new collections, update products, manage content, and maintain usability as the store grows.
+
+Accessibility & Cross-device Compatibility: Responsive design ensures customers on mobile or desktop get similarly good experience — broadening user reach and supporting inclusivity.
+                    </p>
+                    </div>
+                </div>
+                </div>
+
+            <div class="case-study-detail fade-up">
+                
+                <div class="case-content">
+                    <h3>Tattvo Tech </h3>
+                    <p class="case-subtitle">Corporate Website </p>
+
+                    <div class="case-meta">
+                    <div><strong>Role:</strong> UI/UX Designer</div>
+                    
+                    <div><strong>Tools:</strong> Figma </div>
+                    </div>
+
+                    <div class="case-section">
+                    <h4>Problem Statement</h4>
+                    <p>
+                        Need for Clear Service Discovery and Easy Navigation — The company offers multiple complex services (web development, backend, CRM, cloud). Without a clear information architecture and intuitive navigation, potential clients may get overwhelmed or unable to find what they need.
+
+Need to Establish Professional Credibility & Trust — For an IT services firm, clients base their decision on perceived professionalism, reliability, and clarity about services. A poorly designed or generic website may deter trust — reducing lead generation.
+
+Need for a Seamless Conversion Path (Lead/Contact Flow) — Users (business decision-makers) visiting the site must be able to quickly understand offerings and contact the company (via “Get in Touch” or contact form) with minimal friction.
+
+Need for Clarity, Readability, and Appeal Across Devices — Prospective clients may access the site from desktop or mobile. Website must communicate complex service offerings in a clean, readable, and visually appealing format across devices.
+                    </p>
+                    </div>
+
+                    <div class="case-section">
+                    <h4>Solution - UX / UI Strategy & Implementation</h4>
+                    <p>
+                        To address these needs, the following design and UX decisions were made:
+
+Structured Information Architecture & Clear Navigation
+The website is organized with clear sections: Home (overview), Services (listing Web Development, Backend, CRM, Cloud, etc.), About Us (company mission, team), and Contact / Get in Touch. This ensures that visitors can quickly locate relevant services without navigating through clutter.
+
+Professional, Clean Visual Design Reflecting Brand Identity
+The UI uses a modern and minimal design language — a restrained color palette, clean typography, and consistent spacing/layout — to reflect professionalism and build trust. This helps signal that TATTVO TECH is a credible and capable IT services provider.
+
+Service-Focused Content Presentation
+Each service is clearly described in concise, business-friendly language. Key service categories are highlighted so that potential clients immediately understand what the company offers, reducing confusion common in multi-service firms.
+
+Prominent Call-to-Action and Easy Contact Flow
+A “Get in Touch / Contact Us” CTA is placed prominently (e.g., in header or home page), guiding users who want to inquire or request a quote. This reduces friction and supports lead generation by providing a straightforward path for user engagement.
+
+Responsive Design for Cross-Device Usability
+The layout adapts across screen sizes (desktop, tablet, mobile), ensuring readability, proper navigation, and usability regardless of device — which is crucial given clients might access the site from mobile devices.
+
+Scalable and Maintainable Structure
+The site’s modular structure and consistent design patterns facilitate easy updates: adding new services, updating team info, scaling as the company grows — without compromising usability or design consistency.
+                    </p>
+                    </div>
+
+                    <div class="case-section">
+                    <h4>Outcome</h4>
+                    <p>
+                        Improved Clarity & User Experience — Visitors can immediately grasp what TATTVO TECH offers and how to contact the company: service categories are clear, navigation is simple, content is digestible.
+
+Enhanced Professional Impression & Credibility — The clean, modern design along with structured content helps build confidence among potential clients, positioning TATTVO TECH as a serious, reliable IT services provider.
+
+Better Conversion Potential (Leads / Client Inquiries) — With a clear contact path and prominent CTAs, the website is optimized to convert visitors into leads — improving chances of client engagement.
+
+Cross-Device Accessibility & Broad Reach — Responsive design ensures clients using mobile or desktop have equally good experience, increasing accessibility.
+
+Future-proof, Scalable Platform — The modular design and clear architecture make it easier to expand offerings, add pages, or update content as the company grows — without breaking user experience or UI consistency.
+                    </p>
+                    </div>
+                </div>
+                </div>
+
+            <div class="case-study-detail fade-up">
+                
+                <div class="case-content">
+                    <h3>ForceInfo - UX / UI Strategy & Implementation </h3>
+                    <p class="case-subtitle">training / educational Website </p>
+
+                    <div class="case-meta">
+                    <div><strong>Role:</strong> UI/UX Designer</div>
+                    
+                    <div><strong>Tools:</strong> Figma, User Research</div>
+                    </div>
+
+                    <div class="case-section">
+                    <h4>Problem Statement</h4>
+                    <p>
+                        Need for Clear, Intuitive Course Discovery and Understanding — Users (prospective learners) come to the site wanting to quickly understand what courses are offered, what each course includes (learning outcomes, certification prep, hands-on practice, placement support), and whether it fits their skill / career goals. Without structured information architecture and clarity, visitors may be overwhelmed or leave without enrolling.
+
+Need for Trust & Credibility — For a training institute, users need to feel confident about legitimacy: course quality, instructor expertise, real support, value. A generic or poorly designed site may reduce trust and deter enrollment.
+
+Need for Smooth Conversion / Enrollment Flow — Visitors who are interested must easily find how to inquire, contact or sign up; friction or confusion in call-to-action (CTA), enrollment process or contact flow may cause drop-offs.
+
+Need for Responsive, Accessible & Readable Design — Prospective learners may browse from mobile devices or various screen sizes; readability, clarity, ease of navigation and responsiveness is important to ensure a good experience across devices.
+
+Need for Clear Presentation of Benefits / Value Proposition — Users need to understand not only what’s offered, but why it matters (certification, projects, career support) — ideally highlighted in a compelling, readable way.
+                    </p>
+                    </div>
+
+                    <div class="case-section">
+                    <h4>Solution</h4>
+                    <p>
+                        To address the above needs and ensure the site serves its goals effectively, the following UX/UI design strategy and decisions have been implemented on ForceInfo:
+
+Clear Information Architecture & Layout
+The site organizes content into logical sections: e.g. “About Us / What We Offer”, “Courses” (with separate cards for each course type: Admin, Developer, Consultant), “Key Benefits”, and “Contact”. This helps prospective users quickly scan and find relevant information without confusion. 
+
+Prominent Value Propositions & Benefit Highlights
+The homepage leads with a strong headline (e.g. “Launch Your Salesforce Career”) followed by quick statements of value: certified instructors, hands-on project-based learning, placement support, exam preparation, etc. This helps communicate benefits clearly and attract user interest. 
+
+Visual & Content Hierarchy Favoring Readability
+Course cards, benefit sections, call-to-action links (e.g. “Learn More →”) are laid out cleanly — giving each element breathing space, making scanning easy. Good use of headings, sub-headings, images (or placeholders), and button-based navigation supports readability and ease of choice.
+
+Accessible Navigation & Conversion Flow
+Navigation appears straightforward (menu items like About, Courses, etc.), reducing cognitive load; CTA flows are clear (e.g. “Learn More →”), making it easier for users to proceed from browsing to inquiry/enrollment action.
+
+Responsive and Device-Friendly Approach
+Given the global and varied audience, design likely follows responsive practices (given that site is built on a static hosting platform), ensuring users on mobile devices have a usable experience. This is a standard good practice for services and business websites. 
+
+Trust-Building Through Professional Tone & Transparency
+Use of professional language: course details, benefits, modules — communicates seriousness; clear presentation of what the user gets helps reduce friction and builds confidence.
+                    </p>
+                    </div>
+
+                    <div class="case-section">
+                    <h4>Outcome</h4>
+                    <p>
+                        From this design and UX approach, the website for ForceInfo yields several advantages:
+
+Improved User Clarity & Engagement: Visitors immediately understand what ForceInfo offers — courses, benefits, support — reducing friction in decision making.
+
+Stronger Trust & Credibility: Clear structure, professional presentation, transparent value proposition aids in establishing legitimacy — which is crucial for educational/training services.
+
+Higher Conversion Potential: With intuitive navigation and clear CTA flows, prospective learners find it easier to take the next step (learn more / contact / enroll), improving lead generation / sign-ups.
+
+Broad Accessibility & Device Compatibility: Responsive design ensures accessibility across devices, increasing reach to users on mobile as well as desktop.
+
+Scalable & Maintainable Structure: Clean architecture supports future expansion — additional courses, updated content, new benefit sections — without compromising usability or overwhelming users.
+                    </p>
+                    </div>
+                </div>
+                </div>
+        </div>
+        <section id="certifications">
+        <div class="container fade-up">
+            <div class="section-title-container">
+            <div class="section-title">
+                <h2>Certificates</h2>
+            </div>
+            </div>
+
+            <div class="certificates-grid">
+
+            <!-- Certificate 1 -->
+            <div class="certificate-card">
+                <div class="cert-image">
+                <img src="uiux-cert.jpeg" alt="UI UX Certificate">
+                </div>
+                <div class="cert-content">
+                <h3>UI/UX Design Certification</h3>
+                <p class="cert-org">SimpliLearn SkillUP</p>
+                <p class="cert-desc">
+                    UX research, wireframing, prototyping, usability testing, and design systems.
+                </p>
+                <span class="cert-year">2024</span>
+                </div>
+            </div>
+
+            <!-- Certificate 2 -->
+            <div class="certificate-card">
+                <div class="cert-image">
+                <img src="figma-cert.jpeg" alt="Figma Certificate">
+                </div>
+                <div class="cert-content">
+                <h3>Advanced UIxUX  Design with Figma</h3>
+                <p class="cert-org">Greate Learning</p>
+                <p class="cert-desc">
+                    Components, auto-layout, variants, and responsive UIxUX systems.
+                </p>
+                <span class="cert-year">2024</span>
+                </div>
+            </div>
+
+            <!-- Certificate 3 -->
+            <div class="certificate-card">
+                <div class="cert-image">
+                <img src="webdev-cert.jpeg" alt="UI&UX Fellowship Program Certificate">
+                </div>
+                <div class="cert-content">
+                <h3>UI&UX Fellowship Program </h3>
+                <p class="cert-org">Metvy</p>
+                <p class="cert-desc">
+                    Fundamentals and performing allotted tasks diligently .
+                </p>
+                <span class="cert-year">2024</span>
+                </div>
+            </div>
+
+            </div>
+        </div>
+        </section>
+
+
+    <section id="contact">
+        <div class="container fade-up">
+            <div class="section-title-container"><div class="section-title"><h2>Get In Touch</h2></div></div>
+            <div class="contact-container">
+                <div class="contact-info-card">
+                    <h3 style="color:var(--accent); margin-bottom:20px;">Contact Info</h3>
+                    <p style="margin-bottom:15px; font-size:1.1rem;"><strong>Email:</strong><br> vempatiharipriya@gmail.com </p>
+                    <p style="margin-bottom:15px; font-size:1.1rem;"><strong>Phone:</strong><br> +91 94917 70549 </p>
+                    <p style="margin-bottom:15px; font-size:1.1rem;"><strong>Location:</strong><br> Vijayawada, Andhra Pradesh </p>
+                </div>
+                <form action="https://formspree.io/f/xaqyplke" method="POST" class="contact-form">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn" style="border:none; width:100%; cursor: pointer;">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container" style="text-align: center; color: #666; font-size: 0.9rem;">
+            &copy; 2025 Hari Priya V. Designed with <span style="color:var(--accent)">&#9829;</span>
+        </div>
+    </footer>
+
+    <script>
+        // 1. DNA DOTS ANIMATION
+        const canvas = document.getElementById('dna-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray;
+
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x; this.y = y; this.directionX = directionX; this.directionY = directionY; this.size = size; this.color = color;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = '#FFD700';
+                ctx.fill();
+            }
+            update() {
+                if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
+                if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
+                this.x += this.directionX;
+                this.y += this.directionY;
+                this.draw();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * 0.4) - 0.2;
+                let directionY = (Math.random() * 0.4) - 0.2;
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, '#FFD700'));
+            }
+        }
+
+        function connect() {
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) + 
+                                   ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                    if (distance < (canvas.width/7) * (canvas.height/7)) {
+                        ctx.strokeStyle = 'rgba(255, 215, 0,' + (1 - (distance / 20000)) + ')';
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0,0,innerWidth, innerHeight);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+            connect();
+        }
+
+        window.addEventListener('resize', function() { canvas.width = innerWidth; canvas.height = innerHeight; init(); });
+        init(); animate();
+
+        // 2. METEOR SCROLL
+        window.addEventListener('scroll', function() {
+            const meteor = document.getElementById('meteor');
+            const totalHeight = document.body.scrollHeight - window.innerHeight;
+            const progress = window.scrollY / totalHeight;
+            const moveDistance = progress * (document.body.scrollHeight - 100);
+            meteor.style.transform = `translate(-50%, ${moveDistance}px)`;
+        });
+
+        // 3. FADE UP REVEAL
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        });
+        document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
+    </script>
+</body>
+</html>
